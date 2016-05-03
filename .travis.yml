@@ -2,4 +2,6 @@ sudo: false
 language: ruby
 rvm:
   - 2.2.0
-before_install: gem install bundler -v 1.12.1
+before_install: 
+  - openssl aes-256-cbc -K $encrypted_121e786cd5aa_key -iv $encrypted_121e786cd5aa_iv -in .gcp-keyfile.json.enc -out .gcp-keyfile.json -d
+  - gem install bundler -v 1.12.1
