@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/metaware/carrierwave-google-storage.svg?branch=master)](https://travis-ci.org/metaware/carrierwave-google-storage)
 [![Code Climate](https://codeclimate.com/github/metaware/carrierwave-google-storage/badges/gpa.svg)](https://codeclimate.com/github/metaware/carrierwave-google-storage)
+[![Gem Version](https://badge.fury.io/rb/carrierwave-google-storage.svg)](https://badge.fury.io/rb/carrierwave-google-storage)
 
 Use the official `gcloud` gem by Google for Google Cloud Storage, instead of Fog. 
 
