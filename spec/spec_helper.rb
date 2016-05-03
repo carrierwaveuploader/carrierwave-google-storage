@@ -9,11 +9,12 @@ FeatureUploader = Class.new(CarrierWave::Uploader::Base) do
 end
 
 def source_environment_file!
-  return unless File.exists?('.env')
-
-  File.readlines('.env').each do |line|
-    key, value = line.split('=')
-    ENV[key] = value.chomp
+  
+  if File.exists?('.env')
+    File.readlines('.env').each do |line|
+      key, value = line.split('=')
+      ENV[key] = value.chomp
+    end
   end
   
   ENV['GCLOUD_KEYFILE'] = Dir.pwd + "/.gcp-keyfile.json"
