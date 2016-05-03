@@ -1,11 +1,13 @@
-# Carrierwave::Google::Storage
+# Carrierwave Google Storage
 
 [![Build Status](https://travis-ci.org/metaware/carrierwave-google-storage.svg?branch=master)](https://travis-ci.org/metaware/carrierwave-google-storage)
 [![Code Climate](https://codeclimate.com/github/metaware/carrierwave-google-storage/badges/gpa.svg)](https://codeclimate.com/github/metaware/carrierwave-google-storage)
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/carrierwave/google/storage`. To experiment with that code, run `bin/console` for an interactive prompt.
+Use the official `gcloud` gem by Google for Google Cloud Storage, instead of Fog. 
 
-TODO: Delete this and the text above, and describe your gem
+- No need to activate Interoperable Access on your project.
+- Rely on Google's preferred authentication mechanism. ie: Service Accounts.
+ 
 
 ## Installation
 
@@ -15,30 +17,59 @@ Add this line to your application's Gemfile:
 gem 'carrierwave-google-storage'
 ```
 
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install carrierwave-google-storage
-
 ## Usage
 
-TODO: Write usage instructions here
+```
+CarrierWave.configure do |config|
+  config.storage                             = :gcloud
+  config.gcloud_bucket                       = 'your-bucket-name'
+  config.gcloud_bucket_is_public             = true
+  config.gcloud_authenticated_url_expiration = 600
+  
+  config.gcloud_attributes = {
+    expires: 600
+  }
+  
+  config.gcloud_credentials = {
+    gcloud_project: 'gcp-project-name',
+    gcloud_keyfile: 'path-to-gcp-keyfile.json'
+  }
+end
+```
 
-## Development
+## How to get the Keyfile?
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+To generate a new keyfile, perform the following steps: 
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+- Go to [Cloud Console > API Manager > Credentials](https://console.cloud.google.com/apis/credentials)
+- Click Create Credentials > Service Account Key
+- Service Account > New Service Account 
+- Give any name for "Service Account Name"
+- Set Key type to JSON
+- Click "Create"
+
+Here's a quick GIF for those who are visual like myself:
+
+![](http://g.recordit.co/VjsK6CAUha.gif)
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/carrierwave-google-storage.
+In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality.
 
+You get extra attention, if your PR includes specs/tests.
+
+- Fork or clone the project.
+- Create your feature branch ($ git checkout -b my-new-feature)
+- Install the dependencies by doing: $ bundle install in the project directory.
+- Add your bug fixes or new feature code.
+- New features should include new specs/tests.
+- Bug fixes should ideally include exposing specs/tests.
+- Commit your changes ($ git commit -am 'Add some feature')
+- Push to the branch ($ git push origin my-new-feature)
+- Open your Pull Request!
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+Copyright (c) 2016 [Jasdeep Singh](http://jasdeep.ca) ([Metaware Labs Inc](http://metawarelabs.com/))
 
+The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
