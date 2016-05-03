@@ -54,6 +54,15 @@ Here's a quick GIF for those who are visual like myself:
 
 ## Contributing
 
+### Environment Variables and such
+
+You should have access to a Google Cloud Platform account, as you'll need the keyfile and a project ID in order to contribute to the development of this gem. You'll need the the following files:
+
+- `.gcp-keyfile.json` (sample file provided: `.gcp-keyfile.sample.json`)
+- `.env` (sample file provided: `.env.sample`)
+
+If you have any questions, please feel free to open up issues and/or PR's. Contributions are welcomed.
+
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality.
 
 You get extra attention, if your PR includes specs/tests.
@@ -66,7 +75,7 @@ You get extra attention, if your PR includes specs/tests.
 - Bug fixes should ideally include exposing specs/tests.
 - Commit your changes ($ git commit -am 'Add some feature')
 - Push to the branch ($ git push origin my-new-feature)
-- Open your Pull Request!
+- Open your Pull Request! 
 
 ## License
 
