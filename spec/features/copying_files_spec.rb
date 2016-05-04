@@ -7,7 +7,7 @@ describe 'Copying Files', type: :feature do
   it 'copies an existing file to the specified path' do
     original.store!(image)
     original.retrieve_from_store!('image.png')
-    original.file.copy_to('uploads/image2.png')
+    original.file.copy_to('image2.png')
 
     copy = FeatureUploader.new
     copy.retrieve_from_store!('image2.png')

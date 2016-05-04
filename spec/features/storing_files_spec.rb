@@ -5,49 +5,63 @@ describe 'Storing Files', type: :feature do
   let(:image)    { File.open('spec/fixtures/image.png', 'r') }
   let(:uploader) { FeatureUploader.new }
   
+  context "remote uploads" do
+    
+    it "can upload remote urls" do
+      uploader.download!("http://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png")
+      uploader.store!
+      uploader.retrieve_from_store!(uploader.send(:original_filename))
+
+      expect(uploader.url).to include(ENV['GCLOUD_BUCKET'])
+      expect(uploader.url).to include(uploader.path)
+      uploader.file.delete
+    end
+    
+  end
+  
   context "public storage" do
     before(:each) do
-        uploader.store!(image)
-        uploader.retrieve_from_store!('image.png')
+      uploader.store!(image)
+      uploader.retrieve_from_store!('image.png')
     end
 
     it 'uploads the file to the configured bucket' do
-        expect(uploader.file.size).to eq(image.size)
-        expect(uploader.file.read).to eq(image.read)
+      expect(uploader.file.size).to eq(image.size)
+      expect(uploader.file.read).to eq(image.read)
 
-        image.close
-        uploader.file.delete
+      image.close
+      uploader.file.delete
     end
 
     it 'retrieves the attributes for a stored file' do
-        expect(uploader.file.attributes).to include(
-        :content_type,
-        :etag,
-        :updated_at
-        )
+      expect(uploader.file.attributes).to include(
+      :content_type,
+      :etag,
+      :updated_at
+      )
 
-        expect(uploader.file.content_type).to eq('image/png')
-        expect(uploader.file.filename).to eq('image.png')
+      expect(uploader.file.content_type).to eq('image/png')
+      expect(uploader.file.filename).to eq('image.png')
 
-        image.close
-        uploader.file.delete
+      image.close
+      uploader.file.delete
     end
 
     it 'checks if a remote file exists' do
-        expect(uploader.file.exists?).to be_truthy
+      expect(uploader.file.exists?).to be_truthy
 
-        uploader.file.delete
-        expect(uploader.file.exists?).to be_falsy
+      uploader.file.delete
+      expect(uploader.file.exists?).to be_falsy
 
-        image.close
+      image.close
     end
 
     it 'gets a url for remote files' do
-        expect(uploader.url).to include(ENV['GCLOUD_BUCKET'])
-        expect(uploader.url).to include(uploader.path)
+      expect(uploader.url).to include(ENV['GCLOUD_BUCKET'])
+      expect(uploader.url).to include(uploader.path)
 
-        image.close
-        uploader.file.delete
+      image.close
+      uploader.file.delete
     end
   end
   

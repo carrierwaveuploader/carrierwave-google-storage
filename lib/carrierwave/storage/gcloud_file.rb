@@ -63,16 +63,16 @@ module CarrierWave
       end
 
       def read
-        (file.download file.name, verify: :all).read
+        (file.download CarrierWave::Support::UriFilename.filename(file.name), verify: :all).read
       end
 
       def store(new_file)
-        bucket.create_file new_file.path, "uploads/" + new_file.filename
+        bucket.create_file new_file.path, "#{uploader.store_dir}/#{new_file.filename}"
         self
       end
 
       def copy_to(new_path)
-        file.copy(new_path)
+        file.copy("#{uploader.store_dir}/#{new_path}")
       end
 
       def authenticated_url(options = {})
