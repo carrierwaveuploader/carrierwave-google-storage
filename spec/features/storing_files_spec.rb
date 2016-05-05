@@ -5,21 +5,8 @@ describe 'Storing Files', type: :feature do
   let(:image)    { File.open('spec/fixtures/image.png', 'r') }
   let(:uploader) { FeatureUploader.new }
   
-  context "remote uploads" do
-    
-    it "can upload remote urls" do
-      uploader.download!("http://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png")
-      uploader.store!
-      uploader.retrieve_from_store!(uploader.send(:original_filename))
-
-      expect(uploader.url).to include(ENV['GCLOUD_BUCKET'])
-      expect(uploader.url).to include(uploader.path)
-      uploader.file.delete
-    end
-    
-  end
+  context "common cases" do
   
-  context "public storage" do
     before(:each) do
       uploader.store!(image)
       uploader.retrieve_from_store!('image.png')
@@ -31,6 +18,17 @@ describe 'Storing Files', type: :feature do
 
       image.close
       uploader.file.delete
+    end
+    
+    it 'returns nil url if its not able to retrieve file from storage' do
+      uploader.file.delete
+      expect(uploader.file.exists?).to be_falsey
+      expect(uploader.file.url).to be_nil
+    end
+    
+    it 'is not able to retrieve attributes if file does not exists' do
+      uploader.file.delete
+      expect(uploader.file.attributes).to be_nil
     end
 
     it 'retrieves the attributes for a stored file' do
@@ -63,6 +61,20 @@ describe 'Storing Files', type: :feature do
       image.close
       uploader.file.delete
     end
+  end
+  
+  context "remote uploads" do
+    
+    it "can upload remote urls" do
+      uploader.download!("http://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png")
+      uploader.store!
+      uploader.retrieve_from_store!(uploader.send(:original_filename))
+
+      expect(uploader.url).to include(ENV['GCLOUD_BUCKET'])
+      expect(uploader.url).to include(uploader.path)
+      uploader.file.delete
+    end
+    
   end
   
   context "secured storage" do

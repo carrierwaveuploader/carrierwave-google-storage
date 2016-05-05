@@ -29,12 +29,13 @@ module CarrierWave
           self.file_exists = true
           yield
         rescue Exception => exception
+          @file = nil
           self.file_exists = false if (exception.class == ::Gcloud::Storage::ApiError) && (exception.message == "Not Found")
-          raise exception
         end
       end
 
       def attributes
+        return unless file_exists
         {
           content_type: file.content_type,
           size: file.size,
@@ -63,7 +64,8 @@ module CarrierWave
       end
 
       def read
-        (file.download CarrierWave::Support::UriFilename.filename(file.name), verify: :all).read
+        tmp_file = Tempfile.new(CarrierWave::Support::UriFilename.filename(file.name))
+        (file.download tmp_file.path, verify: :all).read
       end
 
       def store(new_file)
@@ -75,6 +77,17 @@ module CarrierWave
         file.copy("#{uploader.store_dir}/#{new_path}")
       end
 
+      def url(options = {})
+        return unless file_exists
+        uploader.gcloud_bucket_is_public ? public_url : authenticated_url
+      end
+
+      private
+
+      def bucket
+        bucket ||= connection.bucket(uploader.gcloud_bucket)
+      end
+      
       def authenticated_url(options = {})
         file.signed_url
       end
@@ -85,16 +98,6 @@ module CarrierWave
         else
           file.public_url.to_s
         end
-      end
-
-      def url(options = {})
-        uploader.gcloud_bucket_is_public ? public_url : authenticated_url
-      end
-
-      private
-
-      def bucket
-        bucket ||= connection.bucket(uploader.gcloud_bucket)
       end
 
     end
