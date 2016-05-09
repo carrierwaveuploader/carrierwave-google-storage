@@ -9,13 +9,12 @@ module CarrierWave
       delegate :content_type, :size, to: :file
 
       def initialize(uploader, connection, path)
-        @uploader    = uploader
-        @connection  = connection
-        @path        = path
+        @uploader, @connection, @path = uploader, connection, path
       end
 
       def file
         by_verifying_existence { @file ||= bucket.file(path) }
+        @file
       end
       alias_method :to_file, :file
       
@@ -29,7 +28,6 @@ module CarrierWave
           self.file_exists = true
           yield
         rescue Exception => exception
-          @file = nil
           self.file_exists = false if (exception.class == ::Gcloud::Storage::ApiError) && (exception.message == "Not Found")
         end
       end
@@ -81,12 +79,6 @@ module CarrierWave
         return unless file_exists
         uploader.gcloud_bucket_is_public ? public_url : authenticated_url
       end
-
-      private
-
-      def bucket
-        bucket ||= connection.bucket(uploader.gcloud_bucket)
-      end
       
       def authenticated_url(options = {})
         file.signed_url
@@ -98,6 +90,12 @@ module CarrierWave
         else
           file.public_url.to_s
         end
+      end
+
+      private
+
+      def bucket
+        bucket ||= connection.bucket(uploader.gcloud_bucket)
       end
 
     end
