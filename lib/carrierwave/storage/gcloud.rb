@@ -1,4 +1,3 @@
-
 module CarrierWave
   module Storage
     class Gcloud < Abstract

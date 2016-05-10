@@ -5,7 +5,7 @@ require 'carrierwave-google-storage'
 # require 'carrierwave/google/storage'
 
 FeatureUploader = Class.new(CarrierWave::Uploader::Base) do
-  def filename; 'image.png'; end
+  # def filename; 'image.png'; end
 end
 
 def source_environment_file!

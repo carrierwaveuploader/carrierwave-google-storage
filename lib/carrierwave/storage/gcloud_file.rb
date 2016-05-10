@@ -58,7 +58,7 @@ module CarrierWave
       end
 
       def filename(options = {})
-        CarrierWave::Support::UriFilename.filename(file.name)
+        CarrierWave::Support::UriFilename.filename(file.url) if exists?
       end
 
       def read
@@ -67,7 +67,8 @@ module CarrierWave
       end
 
       def store(new_file)
-        bucket.create_file new_file.path, "#{uploader.store_dir}/#{new_file.filename}"
+        new_file_path = uploader.filename ?  uploader.filename : new_file.filename
+        bucket.create_file new_file.path, "#{uploader.store_dir}/#{new_file_path}" 
         self
       end
 

@@ -65,14 +65,27 @@ describe 'Storing Files', type: :feature do
   
   context "remote uploads" do
     
-    it "can upload remote urls" do
-      uploader.download!("http://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png")
-      uploader.store!
-      uploader.retrieve_from_store!(uploader.send(:original_filename))
-
+    after(:each) do
       expect(uploader.url).to include(ENV['GCLOUD_BUCKET'])
       expect(uploader.url).to include(uploader.path)
       uploader.file.delete
+    end
+    
+    it "can upload from remote urls" do
+      uploader.download!("http://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png")
+      uploader.store!
+      uploader.retrieve_from_store!(uploader.send(:original_filename))
+    end
+    
+    it "file names can be renamed when loading from remote urls" do
+      uploader.class_eval do
+        def filename
+          "filename.png"
+        end
+      end
+      uploader.download!("http://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png")
+      uploader.store!
+      uploader.retrieve_from_store!(uploader.filename)
     end
     
   end
