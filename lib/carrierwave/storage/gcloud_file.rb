@@ -58,7 +58,7 @@ module CarrierWave
       end
 
       def filename(options = {})
-        CarrierWave::Support::UriFilename.filename(file.url) if exists?
+        CarrierWave::Support::UriFilename.filename(file.url)
       end
 
       def read
