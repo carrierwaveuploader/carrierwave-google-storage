@@ -18,6 +18,10 @@ Add this line to your application's Gemfile:
 gem 'carrierwave-google-storage'
 ```
 
+## Rails Compatibility:
+
+- Rails 4 and 5.
+
 ## Usage
 
 ```

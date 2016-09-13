@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
   if RUBY_VERSION >= "2.2.2"
     spec.add_dependency 'activemodel', '>= 3.2.0'
   else 
-    spec.add_dependency 'activemodel', ">= 3.2.0", "< 4.0.0"
+    spec.add_dependency 'activemodel', ">= 3.2.0", "< 5.0.0"
   end
 
   spec.add_development_dependency "bundler", "~> 1.12"
