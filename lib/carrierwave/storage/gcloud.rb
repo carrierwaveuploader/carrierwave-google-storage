@@ -24,7 +24,7 @@ module CarrierWave
         @connection ||= begin
           cert_path = Gem.loaded_specs['google-api-client'].full_gem_path+'/lib/cacerts.pem'
           ENV['SSL_CERT_FILE'] = cert_path
-          self.class.connection_cache[credentials] ||= ::Gcloud.new(credentials[:gcloud_project] || ENV["GCLOUD_PROJECT"], credentials[:gcloud_keyfile] || ENV["GCLOUD_KEYFILE"]).storage
+          self.class.connection_cache[credentials] ||= ::Google::Cloud.new(credentials[:gcloud_project] || ENV["GCLOUD_PROJECT"], credentials[:gcloud_keyfile] || ENV["GCLOUD_KEYFILE"]).storage
         end
       end
 

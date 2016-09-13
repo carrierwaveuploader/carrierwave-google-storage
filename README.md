@@ -4,7 +4,7 @@
 [![Code Climate](https://codeclimate.com/github/metaware/carrierwave-google-storage/badges/gpa.svg)](https://codeclimate.com/github/metaware/carrierwave-google-storage)
 [![Gem Version](https://badge.fury.io/rb/carrierwave-google-storage.svg)](https://badge.fury.io/rb/carrierwave-google-storage)
 
-Use the official `gcloud` gem by Google for Google Cloud Storage, instead of Fog. 
+Use the official `google-cloud` gem by Google for Google Cloud Storage, instead of Fog. 
 
 - No need to activate Interoperable Access on your project.
 - Rely on Google's preferred authentication mechanism. ie: Service Accounts.

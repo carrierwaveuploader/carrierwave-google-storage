@@ -1,4 +1,4 @@
-require 'gcloud'
+require 'google-cloud'
 require 'carrierwave'
 require 'carrierwave/google/storage/version'
 require 'carrierwave/storage/gcloud'
