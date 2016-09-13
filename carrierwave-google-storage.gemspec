@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
   
   spec.add_dependency 'google-cloud', '~> 0.20.0'
-  spec.add_dependency 'carrierwave', '~> 0.7'
+  spec.add_dependency 'carrierwave', '~> 0.11.2'
   
   if RUBY_VERSION >= "2.2.2"
     spec.add_dependency 'activemodel', '>= 3.2.0'
