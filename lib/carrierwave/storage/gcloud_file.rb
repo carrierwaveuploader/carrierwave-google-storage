@@ -28,7 +28,7 @@ module CarrierWave
           self.file_exists = true
           yield
         rescue Exception => exception
-          self.file_exists = false if (exception.class == ::Gcloud::Storage::ApiError) && (exception.message == "Not Found")
+          self.file_exists = false if (exception.class == ::Google::Cloud::Error::NotFoundError) && (exception.message == "Not Found")
         end
       end
 
