@@ -24,6 +24,8 @@ gem 'carrierwave-google-storage'
 
 ## Usage
 
+In `config/initializers/carrierwave.rb` add the following initialization code:
+
 ```
 CarrierWave.configure do |config|
   config.storage                             = :gcloud
@@ -39,6 +41,14 @@ CarrierWave.configure do |config|
     gcloud_project: 'gcp-project-name',
     gcloud_keyfile: 'path-to-gcp-keyfile.json'
   }
+end
+```
+
+Then, in your Uploader classes:
+
+```
+class FileUploader < CarrierWave::Uploader::Base
+   storage :gcloud
 end
 ```
 
