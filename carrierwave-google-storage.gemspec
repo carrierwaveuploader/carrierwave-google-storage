@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Use gcloud for Google Cloud Storage support in CarrierWave.}
   spec.description   = %q{A slimmer alternative to using Fog for Google Cloud Storage support in CarrierWave. Heavily inspired from carrierwave-aws}
-  spec.homepage      = "https://github.com/metaware/carrierwave-google-cloud"
+  spec.homepage      = "https://github.com/metaware/carrierwave-google-storage"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
   
-  spec.add_dependency 'google-cloud', '~> 0.20.0'
+  spec.add_dependency 'google-cloud-storage', '~> 0.21.0'
   spec.add_dependency 'carrierwave', '~> 0.11.2'
   spec.add_dependency 'activemodel', ">= 3.2.0"
 
