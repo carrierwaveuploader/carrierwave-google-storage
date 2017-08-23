@@ -18,9 +18,9 @@ Gem::Specification.new do |spec|
   spec.bindir        = "exe"
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
-  
+
   spec.add_dependency 'google-cloud-storage', '~> 0.21.0'
-  spec.add_dependency 'carrierwave', '~> 0.11.2'
+  spec.add_dependency 'carrierwave', '~> 1.0'
   if RUBY_VERSION >= "2.2.2"
     spec.add_dependency 'activemodel', ">= 3.2.0"
   else
