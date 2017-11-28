@@ -45,7 +45,7 @@ module CarrierWave
       end
 
       def credentials
-        uploader.gcloud_credentials
+        uploader.gcloud_credentials || {}
       end
 
       private
