@@ -22,6 +22,7 @@ module CarrierWave
       alias to_file file
 
       def attributes
+        return unless exists?
         {
           content_type: file.content_type,
           size: file.size,
@@ -32,7 +33,7 @@ module CarrierWave
 
       def delete
         deleted = file.delete
-        self.file_exists = false if deleted
+        @file = nil if deleted
         deleted
       end
 
