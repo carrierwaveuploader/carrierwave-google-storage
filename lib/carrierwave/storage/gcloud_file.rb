@@ -1,9 +1,9 @@
 module CarrierWave
   module Storage
     class GcloudFile
-    
+
       attr_writer :file
-      attr_accessor :uploader, :connection, :path, 
+      attr_accessor :uploader, :connection, :path,
         :gcloud_options, :file_exists
 
       delegate :content_type, :size, to: :file
@@ -17,12 +17,12 @@ module CarrierWave
         @file
       end
       alias_method :to_file, :file
-      
+
       def retrieve
         by_verifying_existence { @file ||= bucket.file(path) }
         self
       end
-      
+
       def by_verifying_existence(&block)
         begin
           self.file_exists = true
@@ -41,13 +41,13 @@ module CarrierWave
           etag: file.etag
         }
       end
-      
+
       def delete
         deleted = file.delete
         self.file_exists = false if deleted
         deleted
       end
-      
+
       def exists?
         self.file_exists
       end
@@ -68,8 +68,9 @@ module CarrierWave
 
       def store(new_file)
         new_file_path = uploader.filename ?  uploader.filename : new_file.filename
-        # bucket.create_file new_file.path, "#{uploader.store_dir}/#{new_file_path}" 
-        bucket.create_file new_file.path, path, content_type: new_file.content_type
+        # bucket.create_file new_file.path, "#{uploader.store_dir}/#{new_file_path}"
+        buchet_file = bucket.create_file new_file.path, path, content_type: new_file.content_type
+        buchet_file.acl.public! if uploader.gcloud_bucket_is_public
         self
       end
 
@@ -81,7 +82,7 @@ module CarrierWave
         return unless file_exists
         uploader.gcloud_bucket_is_public ? public_url : authenticated_url
       end
-      
+
       def authenticated_url(options = {})
         file.signed_url
       end
