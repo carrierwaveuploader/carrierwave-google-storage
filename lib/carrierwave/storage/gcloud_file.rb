@@ -91,7 +91,11 @@ module CarrierWave
         if uploader.asset_host
           "#{uploader.asset_host}/#{path}"
         else
-          file.public_url.to_s
+          if file
+            file.public_url.to_s
+          else
+            uploader.default_url
+          end
         end
       end
 
