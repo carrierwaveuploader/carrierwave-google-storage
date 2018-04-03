@@ -6,18 +6,21 @@ require 'carrierwave/storage/gcloud_file'
 require 'carrierwave/storage/gcloud_options'
 require 'carrierwave/support/uri_filename'
 
-class CarrierWave::Uploader::Base
-  
-  ConfigurationError = Class.new(StandardError)
+module CarrierWave
+  module Uploader
+    class Base
 
-  add_config :gcloud_attributes
-  add_config :gcloud_bucket
-  add_config :gcloud_bucket_is_public
-  add_config :gcloud_credentials
-  add_config :gcloud_authenticated_url_expiration
+      ConfigurationError = Class.new(StandardError)
 
-  configure do |config|
-    config.storage_engines[:gcloud] = 'CarrierWave::Storage::Gcloud'
+      add_config :gcloud_attributes
+      add_config :gcloud_bucket
+      add_config :gcloud_bucket_is_public
+      add_config :gcloud_credentials
+      add_config :gcloud_authenticated_url_expiration
+
+      configure do |config|
+        config.storage_engines[:gcloud] = 'CarrierWave::Storage::Gcloud'
+      end
+    end
   end
-
 end

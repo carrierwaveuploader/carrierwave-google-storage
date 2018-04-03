@@ -1,39 +1,28 @@
+# frozen_string_literal: true
+
 module CarrierWave
   module Storage
     class GcloudFile
-    
+      GCLOUD_STORAGE_URL = 'https://storage.googleapis.com'
+
       attr_writer :file
-      attr_accessor :uploader, :connection, :path, 
-        :gcloud_options, :file_exists
+      attr_accessor :uploader, :connection, :path, :gcloud_options, :file_exists
 
       delegate :content_type, :size, to: :file
 
       def initialize(uploader, connection, path)
-        @uploader, @connection, @path = uploader, connection, path
+        @uploader   = uploader
+        @connection = connection
+        @path       = path
       end
 
       def file
-        by_verifying_existence { @file ||= bucket.file(path) }
-        @file
+        @file ||= bucket.file(path)
       end
-      alias_method :to_file, :file
-      
-      def retrieve
-        by_verifying_existence { @file ||= bucket.file(path) }
-        self
-      end
-      
-      def by_verifying_existence(&block)
-        begin
-          self.file_exists = true
-          yield
-        rescue Exception => exception
-          self.file_exists = false if (exception.class == ::Google::Cloud::Error::NotFoundError) && (exception.message == "Not Found")
-        end
-      end
+      alias to_file file
 
       def attributes
-        return unless file_exists
+        return unless exists?
         {
           content_type: file.content_type,
           size: file.size,
@@ -41,15 +30,15 @@ module CarrierWave
           etag: file.etag
         }
       end
-      
+
       def delete
         deleted = file.delete
-        self.file_exists = false if deleted
+        @file = nil if deleted
         deleted
       end
-      
+
       def exists?
-        self.file_exists
+        !file.nil?
       end
 
       def extension
@@ -62,14 +51,17 @@ module CarrierWave
       end
 
       def read
-        tmp_file = Tempfile.new(CarrierWave::Support::UriFilename.filename(file.name))
+        tmp_file = Tempfile.new(
+          CarrierWave::Support::UriFilename.filename(file.name)
+        )
         (file.download tmp_file.path, verify: :all).read
       end
 
       def store(new_file)
-        new_file_path = uploader.filename ?  uploader.filename : new_file.filename
-        # bucket.create_file new_file.path, "#{uploader.store_dir}/#{new_file_path}" 
-        bucket.create_file new_file.path, path, content_type: new_file.content_type
+        new_file_path = uploader.filename ? uploader.filename : new_file.filename
+        bucket.create_file(
+          new_file.path, path, content_type: new_file.content_type
+        )
         self
       end
 
@@ -78,28 +70,26 @@ module CarrierWave
       end
 
       def url(options = {})
-        return unless file_exists
         uploader.gcloud_bucket_is_public ? public_url : authenticated_url
       end
-      
+
       def authenticated_url(options = {})
-        file.signed_url
+        bucket.signed_url(path, options)
       end
 
       def public_url
         if uploader.asset_host
           "#{uploader.asset_host}/#{path}"
         else
-          file.public_url.to_s
+          "#{GCLOUD_STORAGE_URL}/#{uploader.gcloud_bucket}/#{@path}"
         end
       end
 
       private
 
       def bucket
-        bucket ||= connection.bucket(uploader.gcloud_bucket)
+        connection
       end
-
     end
   end
 end
