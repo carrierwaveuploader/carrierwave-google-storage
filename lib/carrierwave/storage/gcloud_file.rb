@@ -32,7 +32,7 @@ module CarrierWave
       end
 
       def delete
-        deleted = file.delete
+        deleted = file ? file.delete : true
         @file = nil if deleted
         deleted
       end
