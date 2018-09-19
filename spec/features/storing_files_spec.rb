@@ -105,6 +105,7 @@ describe 'Storing Files', type: :feature do
 
     before(:each) do
       uploader.gcloud_bucket_is_public = false
+      uploader.gcloud_content_disposition = 'attachment'
       uploader.store!(image)
       uploader.retrieve_from_store!('image3.png')
     end
@@ -126,6 +127,7 @@ describe 'Storing Files', type: :feature do
 
       expect(uploader.file.content_type).to eq('image/png')
       expect(uploader.file.filename).to eq('image3.png')
+      expect(uploader.file.content_disposition).to eq('attachment')
 
       image.close
       uploader.file.delete
