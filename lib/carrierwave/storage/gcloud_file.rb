@@ -8,7 +8,7 @@ module CarrierWave
       attr_writer :file
       attr_accessor :uploader, :connection, :path, :gcloud_options, :file_exists
 
-      delegate :content_type, :size, to: :file
+      delegate :content_disposition, :content_type, :size, to: :file
 
       def initialize(uploader, connection, path)
         @uploader   = uploader
@@ -60,7 +60,10 @@ module CarrierWave
       def store(new_file)
         new_file_path = uploader.filename ? uploader.filename : new_file.filename
         bucket_file = bucket.create_file(
-          new_file.path, path, content_type: new_file.content_type
+          new_file.path,
+          path,
+          content_type: new_file.content_type,
+          content_disposition: uploader.gcloud_content_disposition
         )
         bucket_file.acl.public! if uploader.gcloud_bucket_is_public
         self

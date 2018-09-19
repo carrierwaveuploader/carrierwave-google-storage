@@ -17,6 +17,7 @@ module CarrierWave
       add_config :gcloud_bucket_is_public
       add_config :gcloud_credentials
       add_config :gcloud_authenticated_url_expiration
+      add_config :gcloud_content_disposition
 
       configure do |config|
         config.storage_engines[:gcloud] = 'CarrierWave::Storage::Gcloud'
