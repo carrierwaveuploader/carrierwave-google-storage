@@ -32,6 +32,7 @@ CarrierWave.configure do |config|
   config.gcloud_bucket                       = 'your-bucket-name'
   config.gcloud_bucket_is_public             = true
   config.gcloud_authenticated_url_expiration = 600
+  config.gcloud_content_disposition          = 'attachment' // or you can skip this
   
   config.gcloud_attributes = {
     expires: 600

@@ -1,16 +1,16 @@
 require 'spec_helper'
 
 describe 'Copying Files', type: :feature do
-  let(:image)    { File.open('spec/fixtures/image.png', 'r') }
+  let(:image)    { File.open('spec/fixtures/image1.png', 'r') }
   let(:original) { FeatureUploader.new }
 
   it 'copies an existing file to the specified path' do
     original.store!(image)
-    original.retrieve_from_store!('image.png')
-    original.file.copy_to('image2.png')
+    original.retrieve_from_store!('image1.png')
+    original.file.copy_to('image3.png')
 
     copy = FeatureUploader.new
-    copy.retrieve_from_store!('image2.png')
+    copy.retrieve_from_store!('image3.png')
 
     original_attributes = original.file.attributes
     original_attributes.reject! { |k,v| [:updated_at, :etag].include?(k) }
