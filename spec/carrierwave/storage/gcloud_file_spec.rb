@@ -35,4 +35,10 @@ describe CarrierWave::Storage::GcloudFile do
     end
   end
 
+  describe '#bucket' do
+    it 'returns the internal bucket instance' do
+      expect(gcloud_file.send :bucket).to be(bucket)
+    end
+  end
+
 end
