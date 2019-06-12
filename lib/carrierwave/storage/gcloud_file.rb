@@ -8,7 +8,8 @@ module CarrierWave
       attr_writer :file
       attr_accessor :uploader, :connection, :path, :gcloud_options, :file_exists
 
-      delegate :content_disposition, :content_type, :size, to: :file
+      delegate :content_disposition, :content_type, :size, to: :file,
+        allow_nil: true
 
       def initialize(uploader, connection, path)
         @uploader   = uploader

@@ -34,5 +34,4 @@ describe CarrierWave::Storage::GcloudFile do
       expect(gcloud_file.extension).to be_nil
     end
   end
-
 end
