@@ -92,7 +92,7 @@ module CarrierWave
       private
 
       def bucket
-        connection
+        @bucket ||= connection.bucket(uploader.gcloud_bucket, skip_lookup: true)
       end
     end
   end
