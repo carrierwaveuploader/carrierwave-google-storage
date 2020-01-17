@@ -7,6 +7,7 @@ describe 'Storing Files', type: :feature do
 
   context 'common cases' do
     before(:each) do
+      sleep 1 # Prevent Google::Cloud::ResourceExhaustedError: rateLimitExceeded
       uploader.store!(image)
       uploader.retrieve_from_store!('image1.png')
     end
