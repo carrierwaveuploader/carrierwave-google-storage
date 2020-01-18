@@ -42,7 +42,7 @@ module CarrierWave
           conn_cache[credentials] ||= ::Google::Cloud.new(
             credentials[:gcloud_project] || ENV['GCLOUD_PROJECT'],
             credentials[:gcloud_keyfile] || ENV['GCLOUD_KEYFILE']
-          ).storage.bucket(uploader.gcloud_bucket, skip_lookup: true)
+          ).storage
         end
       end
 

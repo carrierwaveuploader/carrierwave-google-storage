@@ -8,7 +8,7 @@ module CarrierWave
       attr_writer :file
       attr_accessor :uploader, :connection, :path, :gcloud_options, :file_exists
 
-      delegate :content_disposition, :content_type, :size, to: :file
+      delegate :content_disposition, :content_type, :size, to: :file, allow_nil: true
 
       def initialize(uploader, connection, path)
         @uploader   = uploader
@@ -92,7 +92,7 @@ module CarrierWave
       private
 
       def bucket
-        connection
+        @bucket ||= connection.bucket(uploader.gcloud_bucket, skip_lookup: true)
       end
     end
   end
