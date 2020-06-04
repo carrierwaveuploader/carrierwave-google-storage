@@ -5,6 +5,10 @@ rvm:
   - 2.2.0
   - 2.3.0
   - 2.4.1
+  - 2.5.8
+  - 2.6.6
+  - 2.7.1
+
 before_install:
   - openssl aes-256-cbc -k "$password" -in .gcp-keyfile.json.enc -out .gcp-keyfile.json -d
   - gem install bundler -v 1.12.1
