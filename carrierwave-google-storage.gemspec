@@ -10,8 +10,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Jasdeep Singh']
   spec.email         = ['narang.jasdeep@gmail.com']
 
-  spec.summary       = %q(Use gcloud for Google Cloud Storage support in CarrierWave.)
-  spec.description   = %q(A slimmer alternative to using Fog for Google Cloud Storage support in CarrierWave. Heavily inspired from carrierwave-aws)
+  spec.summary       = %q(Use gcloud for Google Cloud Storage support in Carrierwave.)
+  spec.description   = %q(A slimmer alternative to using Fog for Google Cloud Storage support in Carrierwave. Heavily inspired from carrierwave-aws)
   spec.homepage      = 'https://github.com/metaware/carrierwave-google-storage'
   spec.license       = 'MIT'
 
@@ -20,8 +20,8 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'carrierwave', '~> 1.2'
-  spec.add_dependency 'google-cloud-storage', '~> 1.17.0'
+  spec.add_dependency 'carrierwave', ['>= 1.3.2', '< 3']
+  spec.add_dependency 'google-cloud-storage', '~> 1.18.2'
 
   if RUBY_VERSION >= '2.2.2'
     spec.add_dependency 'activemodel', '>= 3.2.0'
@@ -29,9 +29,9 @@ Gem::Specification.new do |spec|
     spec.add_dependency 'activemodel', '~> 4.2.7'
   end
 
-  spec.add_development_dependency 'bundler', '~> 1.12'
+  spec.add_development_dependency 'bundler', '>= 1.12'
   spec.add_development_dependency 'pry', '~> 0.10.3'
-  spec.add_development_dependency 'rake', '~> 10.0'
+  spec.add_development_dependency 'rake', '>= 12.3.3'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'uri-query_params', '~> 0.7.1'
 end
