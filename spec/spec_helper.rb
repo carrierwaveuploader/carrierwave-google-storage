@@ -35,6 +35,7 @@ RSpec.configure do |config|
 
   config.before(:all, type: :feature) do
     CarrierWave.configure do |config|
+      config.cache_storage                       = :gcloud
       config.storage                             = :gcloud
       config.gcloud_bucket                       = ENV['GCLOUD_BUCKET']
       config.gcloud_bucket_is_public             = true

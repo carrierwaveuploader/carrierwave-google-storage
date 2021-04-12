@@ -1,13 +1,21 @@
 sudo: false
 language: ruby
 rvm:
-  - 2.1.0
-  - 2.2.0
-  - 2.3.0
-  - 2.4.1
+  - 2.2.9
+  - 2.3.8
+  - 2.4.10
+  - 2.5.8
+  - 2.6.6
+  - 2.7.2
+gemfile:
+  - gemfiles/carrierwave-2.x.gemfile
+matrix:
+  include:
+    - rvm: 2.1.10
+      gemfile: gemfiles/carrierwave-1.x.gemfile
 before_install:
   - openssl aes-256-cbc -k "$password" -in .gcp-keyfile.json.enc -out .gcp-keyfile.json -d
-  - gem install bundler -v 1.12.1
+  - gem install bundler -v 1.17.3
 env:
   global:
   - secure: UDesPsjI5LZhaQCI1C5avo3+9vP3snnT1X8FXNzYIG6dABsXhvy8H2Kfia5uQXFty1LuXhORm/xSfGTMx8ybZI0Gc7sGHzP7s6gZ8m17TlzhdxTnKJwqqCf+8/FVlxWbrHeRkA5fVEnCRJw1IU7E4ys9/ExbJBPLjm5E0WSwDQoYicJvkEd4hSvNxnydm2NdA6k1D0Hy8/gTIgXVjQFWbXnh1btiVXKsyN9PkTvvPbz6Q8XY6SpS8W1V9vwBUllJduzO3uVLNjW3LgTFL2g4qUX4ilCy9NaLUniGXye6NpiRy+//gO+N6R83S5o783ZO//2K9kC87a5ZLcy4E1Oc7jMT5AmN1vsKlztsJqw+iDDVXZhGN1w56dDOt+xpx5jWNo03LKzTjpUCCfX7hWZeDbftZfqKMfwQFFD9xz05EvKu8ZpnPCKlveh3wFaHYhGsF469nZb8K7p1TUWRsVl4YjxEro6KaMcNvSOucO8jABqzNTEtrAryAM9lrUBLzpIa/YtxISeOdKNimotxRXiHe2T4x9/PrxQE6DX+UNxxhYUogYxd0qR5E6NumUHhlCEIuaRmoUXV6RXML16/FAolMl6pdszsLhj3SGiX9PXws4lsTNk5M32sTVCqk/lmsilMdyApMtX017ELy6Q6Eiv+xcIUciaAWo3md+z4DN4rnuw=

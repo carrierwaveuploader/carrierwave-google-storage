@@ -31,6 +31,10 @@ module CarrierWave
         GcloudFile.new(uploader, connection, uploader.cache_path(identifier))
       end
 
+      def delete_dir!(path)
+        # do nothing, because there's no such things as 'empty directory'
+      end
+
       def clean_cache!(_seconds)
         raise 'use Object Lifecycle Management to clean the cache'
       end
