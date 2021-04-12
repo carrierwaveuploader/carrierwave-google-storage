@@ -10,8 +10,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Jasdeep Singh']
   spec.email         = ['narang.jasdeep@gmail.com']
 
-  spec.summary       = %q(Use gcloud for Google Cloud Storage support in CarrierWave.)
-  spec.description   = %q(A slimmer alternative to using Fog for Google Cloud Storage support in CarrierWave. Heavily inspired from carrierwave-aws)
+  spec.summary       = %q(Use gcloud for Google Cloud Storage support in Carrierwave.)
+  spec.description   = %q(A slimmer alternative to using Fog for Google Cloud Storage support in Carrierwave. Heavily inspired from carrierwave-aws)
   spec.homepage      = 'https://github.com/metaware/carrierwave-google-storage'
   spec.license       = 'MIT'
 
