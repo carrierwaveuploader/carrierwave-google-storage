@@ -9,6 +9,7 @@
 /_yardoc/
 /coverage/
 /doc/
+/gemfiles/*.lock
 /pkg/
 /spec/reports/
 /tmp/
