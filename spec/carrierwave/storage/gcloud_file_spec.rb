@@ -41,4 +41,27 @@ describe CarrierWave::Storage::GcloudFile do
     end
   end
 
+  describe '#url' do
+    let(:options) { {} }
+
+    context 'when gcloud_bucket_is_public is false' do
+      before { allow(uploader).to receive(:gcloud_bucket_is_public).and_return(false) }
+
+      it 'calls public_url method' do
+        expect(gcloud_file).to receive(:authenticated_url).with(options)
+
+        gcloud_file.url(options)
+      end
+    end
+
+    context 'when gcloud_bucket_is_public is true' do
+      before { allow(uploader).to receive(:gcloud_bucket_is_public).and_return(true) }
+
+      it 'calls public_url method' do
+        expect(gcloud_file).to receive(:public_url)
+
+        gcloud_file.url
+      end
+    end
+  end
 end

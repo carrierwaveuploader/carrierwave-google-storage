@@ -80,7 +80,7 @@ module CarrierWave
       end
 
       def url(options = {})
-        uploader.gcloud_bucket_is_public ? public_url : authenticated_url
+        uploader.gcloud_bucket_is_public ? public_url : authenticated_url(options)
       end
 
       def authenticated_url(options = {})
