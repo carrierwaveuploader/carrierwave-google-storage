@@ -33,5 +33,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'pry', '~> 0.10.3'
   spec.add_development_dependency 'rake', '>= 12.3.3'
   spec.add_development_dependency 'rspec', '~> 3.0'
+  spec.add_development_dependency 'ssrf_filter', '~> 1.0.0'
   spec.add_development_dependency 'uri-query_params', '~> 0.7.1'
 end

@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
 gem 'carrierwave', '~> 1.0'
+gem 'multipart-post', '~> 2.1.0'
 
 gemspec path: '../'
