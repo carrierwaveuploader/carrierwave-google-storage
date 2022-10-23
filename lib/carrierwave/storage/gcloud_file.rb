@@ -86,7 +86,7 @@ module CarrierWave
       end
 
       def authenticated_url(options = {})
-        bucket.signed_url(path, options)
+        bucket.signed_url(path, **options)
       end
 
       def public_url
