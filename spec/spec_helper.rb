@@ -9,7 +9,7 @@ FeatureUploader = Class.new(CarrierWave::Uploader::Base) do
 end
 
 def source_environment_file!
-  if File.exists?('.env')
+  if File.exist?('.env')
     File.readlines('.env').each do |line|
       key, value = line.split('=')
       ENV[key] = value.chomp

@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'carrierwave', ['>= 1.3.2', '< 3']
+  spec.add_dependency 'carrierwave', ['>= 1.3.2', '< 4']
   spec.add_dependency 'google-cloud-storage', '~> 1.18'
 
   if RUBY_VERSION >= '2.2.2'
@@ -30,7 +30,7 @@ Gem::Specification.new do |spec|
   end
 
   spec.add_development_dependency 'bundler', '>= 1.12'
-  spec.add_development_dependency 'pry', '~> 0.10.3'
+  spec.add_development_dependency 'pry', '>= 0.10.3'
   spec.add_development_dependency 'rake', '>= 12.3.3'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'ssrf_filter', '~> 1.0.0'
