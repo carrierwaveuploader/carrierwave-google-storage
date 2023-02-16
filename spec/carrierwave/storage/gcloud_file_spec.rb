@@ -47,7 +47,7 @@ describe CarrierWave::Storage::GcloudFile do
     context 'when gcloud_bucket_is_public is false' do
       before { allow(uploader).to receive(:gcloud_bucket_is_public).and_return(false) }
 
-      it 'calls public_url method' do
+      it 'calls authenticated_url method' do
         expect(gcloud_file).to receive(:authenticated_url).with(options)
 
         gcloud_file.url(options)
@@ -62,6 +62,16 @@ describe CarrierWave::Storage::GcloudFile do
 
         gcloud_file.url
       end
+    end
+  end
+
+  describe '#authenticated_url' do
+    before { allow(uploader).to receive(:gcloud_authenticated_url_expiration).and_return(60) }
+
+    it 'calls #signed_url with the expires option' do
+      expect(bucket).to receive(:signed_url).with(path, {expires: 60})
+
+      gcloud_file.authenticated_url
     end
   end
 end
