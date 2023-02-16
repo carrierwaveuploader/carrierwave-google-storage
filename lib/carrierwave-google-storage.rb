@@ -8,9 +8,6 @@ require 'carrierwave/support/uri_filename'
 module CarrierWave
   module Uploader
     class Base
-
-      ConfigurationError = Class.new(StandardError)
-
       add_config :gcloud_attributes
       add_config :gcloud_bucket
       add_config :gcloud_bucket_is_public
