@@ -8,7 +8,7 @@ module CarrierWave
       GCLOUD_STORAGE_URL = 'https://storage.googleapis.com'
 
       attr_writer :file
-      attr_accessor :uploader, :connection, :path, :gcloud_options, :file_exists
+      attr_accessor :uploader, :connection, :path, :file_exists
 
       delegate :content_disposition, :content_type, :size, to: :file, allow_nil: true
 
