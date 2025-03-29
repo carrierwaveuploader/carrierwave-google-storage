@@ -6,7 +6,7 @@ describe 'Storing Files', type: :feature do
   let(:uploader) { FeatureUploader.new }
 
   context 'common cases' do
-    before(:each) do
+    before do
       sleep 1 # Prevent Google::Cloud::ResourceExhaustedError: rateLimitExceeded
       uploader.store!(image)
       uploader.retrieve_from_store!('image1.png')
@@ -21,7 +21,7 @@ describe 'Storing Files', type: :feature do
 
     it 'returns url even if its not available' do
       uploader.file.delete
-      expect(uploader.file.exists?).to be_falsey
+      expect(uploader.file).not_to exist
       expect(uploader.file.url).to be_present
     end
 
@@ -57,10 +57,10 @@ describe 'Storing Files', type: :feature do
     end
 
     it 'checks if a remote file exists' do
-      expect(uploader.file.exists?).to be_truthy
+      expect(uploader.file).to exist
 
       uploader.file.delete
-      expect(uploader.file.exists?).to be_falsy
+      expect(uploader.file).not_to exist
 
       image.close
     end
@@ -74,11 +74,10 @@ describe 'Storing Files', type: :feature do
     end
   end
 
-  let(:uploader) { FeatureUploader.new }
-
   context 'when using :file as cache_storage' do
     let(:uploader) { Class.new(CarrierWave::Uploader::Base) { cache_storage :file }.new }
-    before(:each) do
+
+    before do
       uploader.store!(image)
       uploader.retrieve_from_store!('image1.png')
     end
@@ -92,9 +91,9 @@ describe 'Storing Files', type: :feature do
   end
 
   context 'remote uploads' do
-    let(:image)    { File.open('spec/fixtures/image2.png', 'r') }
+    let(:image) { File.open('spec/fixtures/image2.png', 'r') }
 
-    after(:each) do
+    after do
       expect(uploader.url).to include(ENV['GCLOUD_BUCKET'])
       expect(uploader.url).to include(uploader.path)
       uploader.file.delete
@@ -119,7 +118,7 @@ describe 'Storing Files', type: :feature do
   end
 
   context 'public storage' do
-    before(:each) do
+    before do
       uploader.gcloud_bucket_is_public = true
       uploader.store!(image)
       uploader.retrieve_from_store!('image1.png')
@@ -134,9 +133,9 @@ describe 'Storing Files', type: :feature do
   end
 
   context 'secured storage' do
-    let(:image)    { File.open('spec/fixtures/image3.png', 'r') }
+    let(:image) { File.open('spec/fixtures/image3.png', 'r') }
 
-    before(:each) do
+    before do
       uploader.gcloud_bucket_is_public = false
       uploader.gcloud_content_disposition = 'attachment'
       uploader.store!(image)
@@ -153,9 +152,9 @@ describe 'Storing Files', type: :feature do
 
     it 'retrieves the attributes for a stored file' do
       expect(uploader.file.attributes).to include(
-      :content_type,
-      :etag,
-      :updated_at
+        :content_type,
+        :etag,
+        :updated_at
       )
 
       expect(uploader.file.content_type).to eq('image/png')
@@ -167,10 +166,10 @@ describe 'Storing Files', type: :feature do
     end
 
     it 'checks if a remote file exists' do
-      expect(uploader.file.exists?).to be_truthy
+      expect(uploader.file).to exist
 
       uploader.file.delete
-      expect(uploader.file.exists?).to be_falsy
+      expect(uploader.file).not_to exist
 
       image.close
     end

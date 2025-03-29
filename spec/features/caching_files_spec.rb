@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 describe 'Caching Files', type: :feature do
-  let(:image)    { File.open('spec/fixtures/image1.png', 'r') }
+  let(:image) { File.open('spec/fixtures/image1.png', 'r') }
   let(:uploader) { FeatureUploader.new }
 
   context 'common cases' do
-    before(:each) do
+    before do
       sleep 1 # Prevent Google::Cloud::ResourceExhaustedError: rateLimitExceeded
       uploader.cache!(image)
       uploader.retrieve_from_cache!(uploader.cache_name)
@@ -20,7 +20,7 @@ describe 'Caching Files', type: :feature do
 
     it 'returns url even if its not available' do
       uploader.file.delete
-      expect(uploader.file.exists?).to be_falsey
+      expect(uploader.file).not_to exist
       expect(uploader.file.url).to be_present
     end
 
@@ -56,10 +56,10 @@ describe 'Caching Files', type: :feature do
     end
 
     it 'checks if a remote file exists' do
-      expect(uploader.file.exists?).to be_truthy
+      expect(uploader.file).to exist
 
       uploader.file.delete
-      expect(uploader.file.exists?).to be_falsy
+      expect(uploader.file).not_to exist
 
       image.close
     end

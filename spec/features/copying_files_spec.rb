@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe 'Copying Files', type: :feature do
-  let(:image)     { File.open('spec/fixtures/image1.png', 'r') }
-  let(:original)  { FeatureUploader.new }
-  let(:copy)      { FeatureUploader.new }
+  let(:image) { File.open('spec/fixtures/image1.png', 'r') }
+  let(:original) { FeatureUploader.new }
+  let(:copy) { FeatureUploader.new }
   let(:store_dir) { original.store_dir }
 
   before do
@@ -23,10 +23,10 @@ describe 'Copying Files', type: :feature do
     copy.retrieve_from_store!('image3.png')
 
     original_attributes = original.file.attributes
-    original_attributes.reject! { |k,v| [:updated_at, :etag].include?(k) }
+    original_attributes.reject! { |k, _v| %i[updated_at etag].include?(k) }
 
     copy_attributes = copy.file.attributes
-    copy_attributes.reject! { |k,v| [:updated_at, :etag].include?(k) }
+    copy_attributes.reject! { |k, _v| %i[updated_at etag].include?(k) }
 
     expect(copy_attributes).to eq(original_attributes)
   end

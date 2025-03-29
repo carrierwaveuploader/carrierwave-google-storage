@@ -1,4 +1,4 @@
-$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+$LOAD_PATH.unshift File.expand_path('../lib', __dir__)
 require 'pry'
 require 'carrierwave'
 require 'carrierwave-google-storage'
@@ -9,41 +9,37 @@ FeatureUploader = Class.new(CarrierWave::Uploader::Base) do
 end
 
 def source_environment_file!
-  if File.exist?('.env')
-    File.readlines('.env').each do |line|
-      key, value = line.split('=')
-      ENV[key] = value.chomp
-    end
+  return unless File.exist?('.env')
+
+  File.readlines('.env').each do |line|
+    key, value = line.split('=')
+    ENV[key] = value.chomp
   end
 end
 
-RSpec.configure do |config|
+RSpec.configure do |rs_config|
   source_environment_file!
 
-  config.mock_with :rspec do |mocks|
+  rs_config.mock_with :rspec do |mocks|
     mocks.verify_partial_doubles = true
   end
 
   # config.filter_run :focus
-  config.run_all_when_everything_filtered = true
-  config.order = :random
-  config.default_formatter = 'doc' if config.files_to_run.one?
+  rs_config.run_all_when_everything_filtered = true
+  rs_config.order = :random
+  rs_config.default_formatter = 'doc' if rs_config.files_to_run.one?
 
-  Kernel.srand config.seed
+  Kernel.srand rs_config.seed
 
-  config.before(:all, type: :feature) do
-    CarrierWave.configure do |config|
-      config.cache_storage                       = :gcloud
-      config.storage                             = :gcloud
-      config.gcloud_bucket                       = ENV['GCLOUD_BUCKET']
-      config.gcloud_bucket_is_public             = true
-      config.gcloud_authenticated_url_expiration = 600
-      config.store_dir                           = ['uploaded_files', ENV['BUILD_ID'].presence].compact.join('_')
-
-      config.gcloud_attributes = {
-        expires: 600
-      }
+  rs_config.before(:all, type: :feature) do
+    CarrierWave.configure do |cw_config|
+      cw_config.cache_storage                       = :gcloud
+      cw_config.storage                             = :gcloud
+      cw_config.gcloud_bucket                       = ENV['GCLOUD_BUCKET']
+      cw_config.gcloud_bucket_is_public             = true
+      cw_config.gcloud_authenticated_url_expiration = 600
+      cw_config.store_dir                           = ['uploaded_files', ENV['BUILD_ID'].presence].compact.join('_')
+      cw_config.gcloud_attributes =                 { expires: 600 }
     end
   end
-
 end

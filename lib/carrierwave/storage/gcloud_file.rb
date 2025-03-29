@@ -25,6 +25,7 @@ module CarrierWave
 
       def attributes
         return unless exists?
+
         {
           content_type: file.content_type,
           size: file.size,
@@ -48,7 +49,7 @@ module CarrierWave
         elements.last if elements.size > 1
       end
 
-      def filename(options = {})
+      def filename(options = {}) # rubocop:disable Lint/UnusedMethodArgument
         CarrierWave::Support::UriFilename.filename(file.url)
       end
 
