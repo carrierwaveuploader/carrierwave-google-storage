@@ -1,0 +1,62 @@
+plugins:
+  - rubocop-performance
+  - rubocop-rake
+  - rubocop-rspec
+
+AllCops:
+  Exclude:
+    - "bin/*"
+    - "tmp/**/*"
+    - "vendor/**/*"
+  NewCops: disable
+  TargetRubyVersion: 2.1
+
+Metrics/BlockLength:
+  Exclude:
+    - "spec/**/*"
+
+Metrics/MethodLength:
+  Max: 15
+
+Naming/FileName:
+  Exclude:
+    - "gemfiles/*"
+    - "lib/carrierwave-google-storage.rb"
+    - "spec/carrierwave-google-storage_spec.rb"
+
+RSpec/ContextWording:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Max: 10
+
+RSpec/ExpectInHook:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Max: 5
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 10
+
+RSpec/NoExpectationExample:
+  Enabled: false
+
+RSpec/SpecFilePathFormat:
+  Enabled: false
+
+# Documentation is coming
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  EnforcedStyle: always
+  Exclude:
+    - "Gemfile*"
+    - "Rakefile"
+    - "*.gemspec"
+    - "gemfiles/*"
+    - "spec/**/*"
+
+Style/PerlBackrefs:
+  Enabled: false
