@@ -89,6 +89,12 @@ module CarrierWave
         if uploader.gcloud_authenticated_url_expiration
           options = { expires: uploader.gcloud_authenticated_url_expiration }.merge(options)
         end
+        if uploader.gcloud_use_iam_auth
+          options = {
+            issuer: CarrierWave::Storage::IamSigner.service_account_email,
+            signer: CarrierWave::Storage::IamSigner.signer
+          }.merge(options)
+        end
         bucket.signed_url(path, **options)
       end
 

@@ -14,3 +14,4 @@
 /spec/reports/
 /tmp/
 /.gcp-keyfile.json
+.idea

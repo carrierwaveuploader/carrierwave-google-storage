@@ -45,6 +45,25 @@ CarrierWave.configure do |config|
 end
 ```
 
+### Kubernetes Workload Identity (IAM authentication)
+
+When running on GKE with [Workload Identity](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity) configured, you can authenticate via the pod's IAM service account instead of a keyfile:
+
+```ruby
+CarrierWave.configure do |config|
+  config.storage             = :gcloud
+  config.gcloud_bucket       = 'your-bucket-name'
+  config.gcloud_bucket_is_public = true
+
+  config.gcloud_credentials = {
+    gcloud_project:      'gcp-project-name',
+    gcloud_use_iam_auth: true
+  }
+end
+```
+
+Setting `gcloud_use_iam_auth: true` skips the keyfile entirely and lets the `google-cloud-storage` SDK pick up credentials from the GKE metadata server via Application Default Credentials (ADC). No `GCLOUD_KEYFILE` environment variable is needed.
+
 Then, in your Uploader classes:
 
 ```

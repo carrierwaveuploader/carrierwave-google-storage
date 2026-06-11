@@ -42,10 +42,17 @@ module CarrierWave
       def connection
         @connection ||= begin
           conn_cache = self.class.connection_cache
-          conn_cache[credentials] ||= ::Google::Cloud.new(
-            credentials[:gcloud_project] || ENV['GCLOUD_PROJECT'],
-            credentials[:gcloud_keyfile] || ENV['GCLOUD_KEYFILE']
-          ).storage
+          conn_cache[credentials] ||= begin
+            project = credentials[:gcloud_project] || ENV['GCLOUD_PROJECT']
+            if credentials[:gcloud_use_iam_auth]
+              ::Google::Cloud::Storage.new(project_id: project)
+            else
+              ::Google::Cloud.new(
+                project,
+                credentials[:gcloud_keyfile] || ENV['GCLOUD_KEYFILE']
+              ).storage
+            end
+          end
         end
       end
 
